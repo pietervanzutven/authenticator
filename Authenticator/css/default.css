@@ -1,5 +1,41 @@
-﻿body {
-  /* Uncomment this to enable scrolling and zooming
-  touch-action: manipulation;
-  */
+﻿
+body {
+    width: 100%;
+}
+
+#header {
+    height: 30px;
+}
+
+#label {
+    width: calc(100% / 3 - 6px);
+    vertical-align: sub;
+}
+
+#secret {
+    width: calc(100% / 3 - 6px);
+    vertical-align: sub;
+}
+
+#add {
+    width: calc(100% / 3 - 6px);
+    vertical-align: sub;
+}
+
+#tokens {
+    height: calc(100% - 60px);
+}
+
+#footer {
+    height: 30px;
+}
+
+#import {
+    width: calc(100% / 2 - 2px);
+    vertical-align: sub;
+}
+
+#export {
+    width: calc(100% / 2 - 2px);
+    vertical-align: sub;
 }
