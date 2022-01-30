@@ -26,12 +26,15 @@ window.onload = () => {
     labelInput = document.getElementById('label');
     secretInput = document.getElementById('secret');
 
-    updateTokensList();
+    loadTokens();
     setInterval(updateTokens, 30000);
 }
 
 let totps = [];
-function updateTokensList() {
+function loadTokens() {
+    totps = [];
+    tokensList.innerHTML = '';
+
     const setting = Windows.Storage.ApplicationData.current.localSettings.values.first();
     while (setting.hasCurrent) {
         const label = setting.current.key;
@@ -61,18 +64,43 @@ function updateTokens() {
         const token = totp.generate();
         const div = document.getElementById(totp.label);
         div.innerHTML = totp.label + '<span style="float:right;">' + token + '</span>';
-    })
+    });
 }
 
-function importTokens() {
+async function importTokens() {
+    const picker = new Windows.Storage.Pickers.FileOpenPicker();
+    picker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.desktop;
+    picker.fileTypeFilter.append('.json');
 
+    const file = await picker.pickSingleFileAsync();
+    if (file !== null)
+    {
+        const text = await Windows.Storage.FileIO.readTextAsync(file);
+        const settings = JSON.parse(text);
+
+        for (const [key, value] of Object.entries(settings)) {
+            Windows.Storage.ApplicationData.current.localSettings.values[key] = value;
+        };
+
+        loadTokens();
+    }
 }
 
-function exportTokens() {
-
+async function exportTokens() {
+    const picker = new Windows.Storage.Pickers.FileSavePicker();
+    picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.desktop;
+    picker.fileTypeChoices.insert('JSON', ['.json']);
+    picker.suggestedFileName = "TOTPs";
+    
+    const file = await picker.pickSaveFileAsync();
+    if (file !== null) {
+        Windows.Storage.CachedFileManager.deferUpdates(file);
+        await Windows.Storage.FileIO.writeTextAsync(file, JSON.stringify(Windows.Storage.ApplicationData.current.localSettings.values));
+        const status = await Windows.Storage.CachedFileManager.completeUpdatesAsync(file);
+    }
 }
 
 function addToken() {
     Windows.Storage.ApplicationData.current.localSettings.values[labelInput.value] = secretInput.value;
-
+    loadTokens();
 }
