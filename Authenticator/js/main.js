@@ -40,13 +40,17 @@ function loadTokens() {
         const label = setting.current.key;
         const secret = setting.current.value;
 
-        totps.push(new OTPAuth.TOTP({
-	        label: label,
-	        algorithm: 'SHA1',
-	        digits: 6,
-	        period: 30,
-	        secret: secret
-        }));
+        try {
+            totps.push(new OTPAuth.TOTP({
+	            label: label,
+	            algorithm: 'SHA1',
+	            digits: 6,
+	            period: 30,
+	            secret: secret
+            }));
+        } catch (error) {
+            totps.push({ label: label });
+        }
 
         const div = document.createElement('div');
         div.id = label;
@@ -61,7 +65,12 @@ function loadTokens() {
 
 function updateTokens() {
     totps.forEach(totp => {
-        const token = totp.generate();
+        let token;
+        try {
+            token = totp.generate();
+        } catch (error) {
+            token = 'error';
+        }
         const div = document.getElementById(totp.label);
         div.innerHTML = totp.label + '<span style="float:right;">' + token + '</span>';
     });
