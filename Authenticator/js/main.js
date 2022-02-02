@@ -4,20 +4,6 @@ let tokensList;
 let labelInput;
 let secretInput;
 window.onload = () => {
-
-    let totp = new OTPAuth.TOTP({
-	    issuer: 'ACME',
-	    label: 'AzureDiamond',
-	    algorithm: 'SHA1',
-	    digits: 6,
-	    period: 30,
-	    secret: 'NB2W45DFOIZA'
-    });
-
-    let token = totp.generate();
-
-    Windows.Storage.ApplicationData.current.localSettings.values['AzureDiamond'] = 'NB2W45DFOIZA';
-
     document.getElementById('import').addEventListener('click', importTokens);
     document.getElementById('export').addEventListener('click', exportTokens);
     document.getElementById('add').addEventListener('click', addToken);
