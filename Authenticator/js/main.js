@@ -59,6 +59,12 @@ function updateTokens() {
         }
         const div = document.getElementById(totp.label);
         div.innerHTML = totp.label + '<span style="float:right;">' + token + '</span>';
+        div.onclick = function () {
+            const data = new Windows.ApplicationModel.DataTransfer.DataPackage;
+            data.requestedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.copy;
+            data.setText(token);
+            Windows.ApplicationModel.DataTransfer.Clipboard.setContent(data);
+        };
     });
 }
 
