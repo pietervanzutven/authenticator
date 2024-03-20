@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="4ff085ea-91d9-49ce-b159-ea7f80289c0f" Version="1.1.1.0" Publisher="CN=Pieter van Zutven" />
+  <Identity Name="4ff085ea-91d9-49ce-b159-ea7f80289c0f" Version="1.2.0.0" Publisher="CN=Pieter van Zutven" />
   <mp:PhoneIdentity PhoneProductId="4ff085ea-91d9-49ce-b159-ea7f80289c0f" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Authenticator</DisplayName>
